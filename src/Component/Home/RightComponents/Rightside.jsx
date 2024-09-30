@@ -438,11 +438,12 @@ const Rightside = ({ data }) => {
                 message: msg,
                 delete_me: 0,
                 edited: 0,
-                delete_everyone: 0
+                delete_everyone: 0,
+                token
             }
 
             setChats([...chats, chat])
-            await socket.emit('newChat', { ...chat, token })
+            socket.emit('newChat', chat)
             loadChat(chat)
             setChatId(chat?._id)
 
