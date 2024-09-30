@@ -339,7 +339,7 @@ const Rightside = ({ data }) => {
             }catch(err){
                 alert(err.message)
             }finally{
-                startLoading()
+                stopLoading()
             }
             
 
