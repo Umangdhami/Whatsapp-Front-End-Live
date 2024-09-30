@@ -295,12 +295,13 @@ const Rightside = ({ data }) => {
         // const token = JSON.parse(localStorage.getItem('token'))
         // const headers = { 'Authorization': `Bearer ${token}` };
         try{
+            startLoading()
             const response = await deleteChatBothside(msgId, true)
             // const res = await axios.get(`${ENDPOINTS.deleteChatBothside}/${msgId}`, { headers })
     
             if (response.status === true) {
                 setChats(chats.map((item) => item?._id === response.data?.data?._id ? response.data?.data : item))
-                socket.emit('delete-chat', response.data?.data?._id, response.data?.data)
+                socket.emit('delete-chat', response.data?.data?._id, response.data?.data?.sender_id)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
