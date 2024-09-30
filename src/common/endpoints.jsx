@@ -2,7 +2,7 @@
 const URL = {
     // API 
     // baseUrl : 'https://whatsapp-back-end-live.onrender.com/'
-    baseUrl : 'http://localhost:5011/'
+    baseUrl : import.meta.env.MODE == 'UAT' ? 'http://localhost:5011/' : MODE == 'Live' ?  'https://whatsapp-back-end-live.onrender.com/' : ''
 }
 
 const ENDPOINTS = {
