@@ -27,7 +27,7 @@ const Register = () => {
                     startLoading()
                     let response = await registerUser(data)
 
-                    if (response.status) {
+                    if (response?.status) {
                         navigate('/profile')
                     } else {
                         alert(response.error)

@@ -72,7 +72,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
             //     }
             // })
             console.log('grt noti', response)
-            if (response.status) {
+            if (response?.status) {
                 setNotificationChat(response.data.data)
             } else {
                 alert(response.error)

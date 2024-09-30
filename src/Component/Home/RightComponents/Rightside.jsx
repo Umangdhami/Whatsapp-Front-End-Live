@@ -197,7 +197,7 @@ const Rightside = ({ data }) => {
             const response = await updateChat(msgId, { msg: editMsg }, true)
             // const res = await axios.post(`${ENDPOINTS.updateChat}/${msgId}`, { msg: editMsg }, { headers })
     
-            if (response.status) {
+            if (response?.status) {
                 setChats(chats.map((item) => item._id === response.data.data._id ? response.data.data : item))
                 socket.emit('editChat', response.data.data)
             }else{
@@ -327,7 +327,7 @@ const Rightside = ({ data }) => {
                 let body = {
                     reciver_id: reciverId,
                 }
-                // startLoading()
+                startLoading()
                 // const res = await axios.post(ENDPOINTS.getChat, body, { headers })
                 const response = await getUserChat(body, true)
     
@@ -338,6 +338,8 @@ const Rightside = ({ data }) => {
                 }
             }catch(err){
                 alert(err.message)
+            }finally{
+                startLoading()
             }
             
 

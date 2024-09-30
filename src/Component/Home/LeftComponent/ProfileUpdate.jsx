@@ -306,7 +306,7 @@ const ProfileUpdate = ({ setScale, scale }) => {
                 const response = await getProfile(true)
                 // const res = await axios.get(ENDPOINTS.getProfile, { headers })
 
-                if (response.status) {
+                if (response?.status) {
                     setProfile(response.data.data[0])
                     setProfilePic(response.data.data[0]?.profile?.profile_pic)
                     setProUsername(response.data.data[0]?.profile?.username)
@@ -384,7 +384,7 @@ const ProfileUpdate = ({ setScale, scale }) => {
             const response = await removeProfilePhoto(id, true, headers)
             // const res = await axios.delete(`${ENDPOINTS.removeProfilePhoto}/${id}`, { headers })
 
-            if (response.status) {
+            if (response?.status) {
                 setProfilePic(res.data?.data?.profile_pic)
                 openRemovePhotoModel()
             } else {

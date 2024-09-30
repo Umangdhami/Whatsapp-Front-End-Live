@@ -82,7 +82,7 @@ const SidebarLeft = ({ onButtonClick }) => {
                 const response =await getLoginUser(true)
                 console.log(response, 'pp res')
                 // const res = await axios.get(ENDPOINTS.getLoginUser, { headers })
-                if (response.status) {
+                if (response?.status) {
                     setLoginUser(response.data.data[0])
                 } else {
                     alert(response.error)

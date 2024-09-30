@@ -23,20 +23,21 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
                 // const token = JSON.parse(localStorage.getItem('token'))
                 // const headers = { 'Authorization': `Bearer ${token}` };
                 try{
-                    startLoading()
+                    // startLoading()
                     const response = await chatSended(msg, true)
                     // const res = await axios.post(ENDPOINTS.chatSended, msg, { headers })
                     console.log(response, 'oo')
-                    if (response.status) {
+                    if (response?.status) {
                         setIsSend(1)
                     } else {
                         setIsSend(0)
                     }
                 }catch(err){
                     alert(err.message)
-                }finally{
-                    stopLoading()
                 }
+                // finally{
+                //     stopLoading()
+                // }
                 
 
             }
@@ -46,13 +47,13 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
     if (!socket) return;
     socket.on('chatSendSuccess', async (data) => {
         console.log('chat sendded')
-        if (data._id == msg._id) {
+        if (data._id == msg?._id) {
             setIsSend(1)
         }
     });
 
     socket.on('chatRecivedSuccess', (data) => {
-        if (data._id == msg._id) {
+        if (data._id == msg?._id) {
             setIsRecive(1)
         }
     });
@@ -60,7 +61,7 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
     socket.on('chatReadSuccess', (data) => {
         if (data.length != 0) {
             data.filter((chat) => {
-                if (chat._id == msg._id) {
+                if (chat._id == msg?._id) {
                     setIsRead(1)
                 }
             })
@@ -73,10 +74,10 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
             (async () => {
                 try{
                     startLoading()
-                    const response = await reciveChatSuccess({id : msg._id}, true)
+                    const response = await reciveChatSuccess({id : msg?._id}, true)
                     // const res = await axios.post(ENDPOINTS.reciveChatSuccess, {id : msg._id}, { headers })
     
-                    if (response.status) {
+                    if (response?.status) {
                         setIsRecive(1)
                     } else {
                         setIsRecive(0)
