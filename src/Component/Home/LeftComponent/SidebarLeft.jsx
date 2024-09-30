@@ -27,7 +27,7 @@ const SidebarLeft = ({ onButtonClick }) => {
         // const token = JSON.parse(localStorage.getItem('token'))
         // const headers = { 'Authorization': `Bearer ${token}` };
         try{
-            // startLoading()
+            startLoading()
             const response = await getSingleUser(id, true)
             // const res = await axios.get(`${ENDPOINTS.getSingleUser}/${id}`, { headers })
     
@@ -40,6 +40,9 @@ const SidebarLeft = ({ onButtonClick }) => {
             }
         }catch(err){
             alert(err.message)
+        }
+        finally{
+            stopLoading()
         }
         
 
@@ -188,7 +191,7 @@ const SidebarLeft = ({ onButtonClick }) => {
                 <div style={{ height: '100%' }} className="chat-scroll overflow-y-scroll">
                     {users.length !== 0 &&
                         users.map((u, index) => (
-                            <UserPanel key={index} isActive={isActive} sendrId={u._id} users={users} u={u} index={index} openChatPanel={openChatPanel} />
+                            <UserPanel key={index} isActive={isActive} sendrId={u?._id} users={users} u={u} index={index} openChatPanel={openChatPanel} />
                         ))
                     }
 

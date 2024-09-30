@@ -95,7 +95,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
             setNotificationChat(prev => {
                 const updatedNotifications = [...prev];
                 chat.forEach(newChat => {
-                    const index = updatedNotifications.findIndex(notification => notification._id === newChat._id);
+                    const index = updatedNotifications.findIndex(notification => notification?._id === newChat?._id);
                     if (index !== -1) {
                         updatedNotifications[index] = newChat;
                     } else {
@@ -109,7 +109,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
         } else {
             setNotificationChat(prev => {
                 const updatedNotifications = [...prev];
-                const index = updatedNotifications.findIndex(notification => notification._id === chat._id);
+                const index = updatedNotifications.findIndex(notification => notification?._id === chat?._id);
                 if (index !== -1) {
                     updatedNotifications[index] = chat;
                 } else {
@@ -137,7 +137,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
 
     return (
         <div key={index} className="w-full chat-name px-4">
-            <a onClick={() => showChats(u._id)} className='w-full cursor-pointer'>
+            <a onClick={() => showChats(u?._id)} className='w-full cursor-pointer'>
                 <div className="w-full pt-2.5 relative">
                     {notification.length != 0 &&
                         <div className="notificstion absolute  top-[50%] translate-y-[-50%] right-0">

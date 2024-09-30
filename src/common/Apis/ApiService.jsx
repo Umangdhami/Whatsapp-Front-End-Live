@@ -39,8 +39,8 @@ export const registerUser = async (userData, customHeaders = {}) => {
             return { status: false, error: res.err }
         }
 
-        localStorage.setItem('user', JSON.stringify(response.data.data._id))
-        localStorage.setItem('pr_id', JSON.stringify(response.data.profile._id))
+        localStorage.setItem('user', JSON.stringify(response.data.data?._id))
+        localStorage.setItem('pr_id', JSON.stringify(response.data.profile?._id))
 
         return { status: true }
 
@@ -90,7 +90,7 @@ export const updateProfile = async (id, userData, token=false, customHeaders) =>
         }
 
         // localStorage.setItem('token', JSON.stringify(response.data.data.token))
-        // localStorage.setItem('user_id', JSON.stringify(response.data.data._doc._id))
+        // localStorage.setItem('user_id', JSON.stringify(response.data.data._doc?._id))
 
         return { status: true, data : res.data }
 

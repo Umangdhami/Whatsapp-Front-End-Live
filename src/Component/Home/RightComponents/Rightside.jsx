@@ -54,17 +54,17 @@ const Rightside = ({ data }) => {
     const observerCallback = useCallback((entries) => {
         entries.forEach(entry => {
             const messageId = entry.target.dataset.id;
-            const chatObject = chats.find(chat => chat._id === messageId);
+            const chatObject = chats.find(chat => chat?._id === messageId);
             if (entry.isIntersecting && chatObject) {
                 setVisibleChats(prev => {
-                    const isAlreadyVisible = prev.some(chat => chat._id === messageId);
+                    const isAlreadyVisible = prev.some(chat => chat?._id === messageId);
                     if (!isAlreadyVisible) {
                         return [...prev, chatObject];
                     }
                     return prev;
                 });
             } else {
-                setVisibleChats(prev => prev.filter(chat => chat._id !== messageId));
+                setVisibleChats(prev => prev.filter(chat => chat?._id !== messageId));
             }
         });
 
@@ -77,8 +77,8 @@ const Rightside = ({ data }) => {
         const currentRefs = messageRefs.current;
 
         chats.forEach(chat => {
-            if (currentRefs[chat._id]) {
-                observer.observe(currentRefs[chat._id]);
+            if (currentRefs[chat?._id]) {
+                observer.observe(currentRefs[chat?._id]);
             }
         });
 
@@ -86,8 +86,8 @@ const Rightside = ({ data }) => {
 
         return () => {
             chats.forEach(chat => {
-                if (currentRefs[chat._id]) {
-                    observer.unobserve(currentRefs[chat._id]);
+                if (currentRefs[chat?._id]) {
+                    observer.unobserve(currentRefs[chat?._id]);
                 }
             });
         };
@@ -125,7 +125,7 @@ const Rightside = ({ data }) => {
 
             if (reciver_id == data.sender_id && data.reciver_id == sender_id) {
                 setChats((prevChats) => {
-                    const chatExists = prevChats.some(chat => chat._id === data._id);
+                    const chatExists = prevChats.some(chat => chat?._id === data?._id);
                     if (!chatExists) {
                         return [...prevChats, data];
                     }
@@ -134,7 +134,7 @@ const Rightside = ({ data }) => {
                 // playAudio()
 
             }
-            socket.emit('chatRecived', data._id)
+            socket.emit('chatRecived', data?._id)
 
         });
 
@@ -142,7 +142,7 @@ const Rightside = ({ data }) => {
 
             if (data && data.reciver_id) {
                 if (senderId == data.reciver_id) {
-                    setChats(chats.map(item => item._id === data._id ? data : item))
+                    setChats(chats.map(item => item?._id === data?._id ? data : item))
                 }
             }
 
@@ -183,7 +183,7 @@ const Rightside = ({ data }) => {
 
     const openEditModel = (id) => {
         setmsgId(id)
-        let msg = chats.find(item => item._id === id);
+        let msg = chats.find(item => item?._id === id);
         setEditMsg(msg.message)
         setOpenEditModal(true)
     }
@@ -198,7 +198,7 @@ const Rightside = ({ data }) => {
             // const res = await axios.post(`${ENDPOINTS.updateChat}/${msgId}`, { msg: editMsg }, { headers })
     
             if (response?.status) {
-                setChats(chats.map((item) => item._id === response.data.data._id ? response.data.data : item))
+                setChats(chats.map((item) => item?._id === response.data.data?._id ? response.data.data : item))
                 socket.emit('editChat', response.data.data)
             }else{
                 alert(response.error)
@@ -265,7 +265,7 @@ const Rightside = ({ data }) => {
     }
 
     const deleteMessages = (id) => {
-        setChats(chats.filter((item) => item._id !== id));
+        setChats(chats.filter((item) => item?._id !== id));
     }
 
 
@@ -275,8 +275,8 @@ const Rightside = ({ data }) => {
             const response = await deleteChatUserside(msgId, true)
             // const res = await axios.get(`${ENDPOINTS.deleteChatUserside}/${msgId}`)
             if (response.status === true) {
-                setChats(chats.filter((item) => item._id !== response.data.data._id));
-                socket.emit('delete-chat', response.data.data._id)
+                setChats(chats.filter((item) => item?._id !== response.data.data?._id));
+                socket.emit('delete-chat', response.data.data?._id)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
@@ -299,8 +299,8 @@ const Rightside = ({ data }) => {
             // const res = await axios.get(`${ENDPOINTS.deleteChatBothside}/${msgId}`, { headers })
     
             if (response.status === true) {
-                setChats(chats.map((item) => item._id === response.data.data._id ? response.data.data : item))
-                socket.emit('delete-chat', response.data.data._id, response.data.data)
+                setChats(chats.map((item) => item?._id === response.data.data?._id ? response.data.data : item))
+                socket.emit('delete-chat', response.data.data?._id, response.data.data)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
@@ -327,7 +327,7 @@ const Rightside = ({ data }) => {
                 let body = {
                     reciver_id: reciverId,
                 }
-                startLoading()
+                // startLoading()
                 // const res = await axios.post(ENDPOINTS.getChat, body, { headers })
                 const response = await getUserChat(body, true)
     
@@ -338,9 +338,10 @@ const Rightside = ({ data }) => {
                 }
             }catch(err){
                 alert(err.message)
-            }finally{
-                stopLoading()
             }
+            // finally{
+            //     stopLoading()
+            // }
             
 
             const chatElement = document.querySelector('#chat-scroll');
@@ -362,9 +363,9 @@ const Rightside = ({ data }) => {
         localStorage.removeItem('senderId')
         localStorage.removeItem('reciverId')
         if (chatUser.length !== 0) {
-            setReciverId(chatUser[0]._id);
+            setReciverId(chatUser[0]?._id);
             localStorage.setItem('senderId', JSON.stringify(chatUser[0].sender_id))
-            localStorage.setItem('reciverId', JSON.stringify(chatUser[0]._id))
+            localStorage.setItem('reciverId', JSON.stringify(chatUser[0]?._id))
             setSenderId(chatUser[0].sender_id);
             setUsername(chatUser[0].username)
             getChat()
@@ -382,7 +383,7 @@ const Rightside = ({ data }) => {
 
             if (reciver_id == data.sender_id && data.reciver_id == sender_id) {
                 setChats((prevChats) => {
-                    const chatExists = prevChats.some(chat => chat._id === data._id);
+                    const chatExists = prevChats.some(chat => chat?._id === data?._id);
                     if (!chatExists) {
                         return [...prevChats, data];
                     }
@@ -391,7 +392,7 @@ const Rightside = ({ data }) => {
                 // playAudio()
 
             }
-            await socket.emit('chatRecived', data._id)
+            await socket.emit('chatRecived', data?._id)
 
     }
 
@@ -430,7 +431,7 @@ const Rightside = ({ data }) => {
             setChats([...chats, chat])
             await socket.emit('newChat', { ...chat, token })
             loadChat(chat)
-            setChatId(chat._id)
+            setChatId(chat?._id)
 
             setMsg('')
             const chatElement = document.querySelector('#chat-scroll');
@@ -618,12 +619,12 @@ const Rightside = ({ data }) => {
 
                                                 msg.sender_id == reciverId ?
                                                     //white
-                                                    <div key={index} ref={el => messageRefs.current[msg._id] = el} data-id={msg._id} >
+                                                    <div key={index} ref={el => messageRefs.current[msg?._id] = el} data-id={msg?._id} >
                                                         <Recive msg={msg} chatOptions={chatOptions} index={index} optionMenu={optionMenu} showOptions={showOptions} vrPosition={vrPosition} hrPosition={hrPosition} openDeleteModel={openDeleteModel} />
                                                     </div>
                                                     : msg.delete_me === 0 &&
                                                     //green
-                                                    <Send isOnline={isOnline} key={index} chatId={chatId} msgId={msg._id} msg={msg} chatOptions={chatOptions} index={index} optionMenu={optionMenu} showOptions={showOptions} vrPosition={vrPosition} hrPosition={hrPosition} openDeleteModel={openDeleteModel} openEditModel={openEditModel} />
+                                                    <Send isOnline={isOnline} key={index} chatId={chatId} msgId={msg?._id} msg={msg} chatOptions={chatOptions} index={index} optionMenu={optionMenu} showOptions={showOptions} vrPosition={vrPosition} hrPosition={hrPosition} openDeleteModel={openDeleteModel} openEditModel={openEditModel} />
                                             ))
                                         }
                                     </div>

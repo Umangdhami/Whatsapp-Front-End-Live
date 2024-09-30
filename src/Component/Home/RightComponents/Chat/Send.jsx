@@ -47,13 +47,13 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
     if (!socket) return;
     socket.on('chatSendSuccess', async (data) => {
         console.log('chat sendded')
-        if (data._id == msg?._id) {
+        if (data?._id == msg?._id) {
             setIsSend(1)
         }
     });
 
     socket.on('chatRecivedSuccess', (data) => {
-        if (data._id == msg?._id) {
+        if (data?._id == msg?._id) {
             setIsRecive(1)
         }
     });
@@ -61,7 +61,7 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
     socket.on('chatReadSuccess', (data) => {
         if (data.length != 0) {
             data.filter((chat) => {
-                if (chat._id == msg?._id) {
+                if (chat?._id == msg?._id) {
                     setIsRead(1)
                 }
             })
@@ -75,7 +75,7 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
                 try{
                     startLoading()
                     const response = await reciveChatSuccess({id : msg?._id}, true)
-                    // const res = await axios.post(ENDPOINTS.reciveChatSuccess, {id : msg._id}, { headers })
+                    // const res = await axios.post(ENDPOINTS.reciveChatSuccess, {id : msg?._id}, { headers })
     
                     if (response?.status) {
                         setIsRecive(1)
@@ -99,54 +99,54 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
 
                     <div style={{ background: 'radial-gradient(at top right, rgba(217, 253, 211, 1) 60%, rgba(217, 253, 211, 0) 80%)' }} className="cursor-pointer opacity-0 option absolute right-[5px] top-[13px] ps-[23px] z-[1] pb-[3px]">
                         <div className='relative'>
-                            <button className='text-[#8696a0]' onClick={(e) => optionMenu(e, msg._id, 'right')}>
+                            <button className='text-[#8696a0]' onClick={(e) => optionMenu(e, msg?._id, 'right')}>
                                 <FaAngleDown className='text-[18px]' />
                             </button>
                             {
-                                chatOptions === msg._id && showOptions &&
+                                chatOptions === msg?._id && showOptions &&
 
                                 <div className={`absolute chatoptions ${vrPosition} ${hrPosition}`}>
-                                    <div style={{ transition: '.5s' }} className={(chatOptions === msg._id && showOptions) ? `animations w-[168px] overflow-hidden bg-white py-[9px] rounded-lg z-[222]` : " "}>
+                                    <div style={{ transition: '.5s' }} className={(chatOptions === msg?._id && showOptions) ? `animations w-[168px] overflow-hidden bg-white py-[9px] rounded-lg z-[222]` : " "}>
                                         <div className="flex h-auto">
                                             <ul className="flex flex-col w-[100%]">
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => deleteMessage(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Message info</button>
+                                                        <button onClick={() => deleteMessage(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Message info</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => deleteMessage(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Reply</button>
+                                                        <button onClick={() => deleteMessage(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Reply</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => deleteMessage(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>React</button>
+                                                        <button onClick={() => deleteMessage(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>React</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => deleteMessage(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Forward</button>
+                                                        <button onClick={() => deleteMessage(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Forward</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => deleteMessage(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Pin</button>
+                                                        <button onClick={() => deleteMessage(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Pin</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => deleteMessage(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Star</button>
+                                                        <button onClick={() => deleteMessage(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Star</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => openEditModel(msg._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Edit</button>
+                                                        <button onClick={() => openEditModel(msg?._id)} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Edit</button>
                                                     </div>
                                                 </li>
                                                 <li className='hover:bg-[#f5f6f6]'>
                                                     <div className="ps-[24px] py-[8px] w-[100%] flex justify-start">
-                                                        <button onClick={() => openDeleteModel(msg._id, 'sender')} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Delete</button>
+                                                        <button onClick={() => openDeleteModel(msg?._id, 'sender')} className='text-[#3B4A54]' style={{ fontWeight: '100' }}>Delete</button>
                                                     </div>
                                                 </li>
                                             </ul>

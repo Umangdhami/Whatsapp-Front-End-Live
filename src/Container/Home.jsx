@@ -13,7 +13,7 @@ const Home = () => {
 
     const handeleChatUser = (user) => {
         setData(user[0])
-        setReciver(user._id)
+        setReciver(user?._id)
     };
 
 
