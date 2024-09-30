@@ -1,0 +1,51 @@
+{
+  "name": "whatsapp-front-end",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "homepage": "https://umangdhami.github.io/Whtsapp-Front-End-Live/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.0.14",
+    "@syncfusion/ej2-react-image-editor": "^26.2.10",
+    "axios": "^1.7.2",
+    "flowbite-react": "^0.10.1",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.45",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-draggable": "^4.4.6",
+    "react-hook-form": "^7.52.1",
+    "react-icons": "^5.2.1",
+    "react-modal": "^3.16.1",
+    "react-moveable": "^0.56.0",
+    "react-redux": "^9.1.2",
+    "react-router": "^6.25.1",
+    "react-router-dom": "^6.25.1",
+    "redux": "^5.0.1",
+    "socket.io-client": "^4.7.5",
+    "styled-components": "^6.1.12",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "gh-pages": "^6.1.1",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "vite": "^5.3.4"
+  }
+}
