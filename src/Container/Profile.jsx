@@ -22,7 +22,7 @@ const Profile = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        data?.profile_pic = file
+        data.profile_pic = file
 
         console.log('hello')
 

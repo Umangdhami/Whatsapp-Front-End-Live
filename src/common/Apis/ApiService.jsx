@@ -74,7 +74,7 @@ export const loginUser = async (userData, customHeaders = {}) => {
 
 export const updateProfile = async (id, userData, token=false, customHeaders) => {
     try {
-
+console.log(id,' ids profile')
         if(token){
             let token = await tokens()
             console.log(token, 'token')
@@ -350,7 +350,7 @@ export const getProfile = async (token, customHeaders = {}) => {
     }
 };
 
-export const removeProfilePhoto = async (id, token, customHeaders) => {
+export const removeProfilePic = async (id, token, customHeaders) => {
     try {
 
         if(token){

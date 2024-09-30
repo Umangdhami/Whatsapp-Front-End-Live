@@ -1,7 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaAngleDown } from "react-icons/fa6";
+import { useSocket } from '../../../../config/socket';
 
-const Recive = ({msg, chatOptions, index, optionMenu, showOptions, vrPosition, hrPosition, openDeleteModel }) => {
+const Recive = ({ msg, senderId, chatOptions, index, optionMenu, showOptions, vrPosition, hrPosition, openDeleteModel }) => {
+    const socket = useSocket();
+    // const [msg, setMsg] = useState(msg)
+    const [deleteEveryone, setDeleteEveryone] = useState(msg.delete_everyone)
+
+    // console.log(msg, 'hello new msg')
+
+    if (!socket) return;
+    socket.on('chatMessageDeletedBothSide', (data, id) => {
+
+        if (data && data?.reciver_id) {
+            if (msg._id == data._id) {
+                console.log('emit call delete id:', id, 'data', data)
+                setDeleteEveryone(1)
+            }
+        }
+
+    })
+
+    
+
+
+
     return (
         <div>
             <div key={index} className=" w-[100%] flex flex-wrap ">
@@ -66,7 +89,7 @@ const Recive = ({msg, chatOptions, index, optionMenu, showOptions, vrPosition, h
                     <div className='flex w-[100%] flex-wrap text-[14px] rounded-[10px]'>
                         <div style={{ boxShadow: '0 1px .5px rgba(11, 20, 26, .13)' }} className={`relative w-[100%] rounded-[10px] bg-[white] ps-2 pt-[4px] pb-[6px] ${msg.edited == 1 ? 'pe-[64px]' : 'pe-[30px]'}`}>
 
-                            <span className='w-[20px] font-extralight pe-[13px] break-words'>{msg.delete_everyone === 0 ? msg.message : 'This message deleted'}</span>
+                            <span className='w-[20px] font-extralight pe-[13px] break-words'>{deleteEveryone == 0 ? msg.message : 'This message deleted'}</span>
 
                             <div className="absolute bottom-0 right-[8px] flex flex-nowrap">
                                 <span className='text-[10.5px] pb-[2px] font-extralight  pe-[0]'>

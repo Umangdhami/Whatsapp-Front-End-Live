@@ -40,8 +40,7 @@ const SidebarLeft = ({ onButtonClick }) => {
             }
         }catch(err){
             alert(err.message)
-        }
-        finally{
+        } finally{
             stopLoading()
         }
         
@@ -94,7 +93,7 @@ const SidebarLeft = ({ onButtonClick }) => {
             } catch (err) {
                 alert(err.message)
             }finally{
-                startLoading()
+                stopLoading()
             }
         }
         user()

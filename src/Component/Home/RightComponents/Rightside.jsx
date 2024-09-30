@@ -117,6 +117,18 @@ const Rightside = ({ data }) => {
     useEffect(() => {
         if (!socket) return;
 
+        socket.on('updateChat', (data) => {
+            console.log(data, 'edit chat data', senderId)
+            if (data && data?.reciver_id) {
+                let sender_id = JSON.parse(localStorage.getItem('senderId'))
+                if (sender_id == data.reciver_id) {
+                    console.log('chat edited')
+                    setChats(prevChats => prevChats.map(item => item._id === data._id ? data : item))
+                }
+            }
+    
+        })
+
         socket.on('loadNewChat', async (data) => {
             console.log('chat loadss success')
             socket.emit('chatSend', data)
@@ -138,11 +150,11 @@ const Rightside = ({ data }) => {
 
         });
 
-        socket.on('chatMessageDeleted', (id, data) => {
+        socket.on('chatMessageDeleted', (data, id) => {
 
             if (data && data?.reciver_id) {
-                if (senderId == data?.reciver_id) {
-                    setChats(chats.map(item => item?._id === data?._id ? data : item))
+                if (senderId == data.reciver_id) {
+                    setChats(prevChats => prevChats.map(item => item?._id == data?._id ? data : item))
                 }
             }
 
@@ -197,7 +209,7 @@ const Rightside = ({ data }) => {
             const response = await updateChat(msgId, { msg: editMsg }, true)
             // const res = await axios.post(`${ENDPOINTS.updateChat}/${msgId}`, { msg: editMsg }, { headers })
     
-            if (response?.status) {
+            if (response.status) {
                 setChats(chats.map((item) => item?._id === response.data?.data?._id ? response.data?.data : item))
                 socket.emit('editChat', response.data?.data)
             }else{
@@ -276,7 +288,7 @@ const Rightside = ({ data }) => {
             // const res = await axios.get(`${ENDPOINTS.deleteChatUserside}/${msgId}`)
             if (response.status === true) {
                 setChats(chats.filter((item) => item?._id !== response.data?.data?._id));
-                socket.emit('delete-chat', response.data?.data?._id)
+                socket.emit('delete-chat-for-user-only', response.data?.data?._id)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
@@ -301,7 +313,7 @@ const Rightside = ({ data }) => {
     
             if (response.status === true) {
                 setChats(chats.map((item) => item?._id === response.data?.data?._id ? response.data?.data : item))
-                socket.emit('delete-chat', response.data?.data?._id, response.data?.data?.sender_id)
+                socket.emit('delete-chat-both-side', response.data?.data?._id, response.data?.data?.sender_id)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
@@ -621,7 +633,7 @@ const Rightside = ({ data }) => {
                                                 msg?.sender_id == reciverId ?
                                                     //white
                                                     <div key={index} ref={el => messageRefs.current[msg?._id] = el} data-id={msg?._id} >
-                                                        <Recive msg={msg} chatOptions={chatOptions} index={index} optionMenu={optionMenu} showOptions={showOptions} vrPosition={vrPosition} hrPosition={hrPosition} openDeleteModel={openDeleteModel} />
+                                                        <Recive senderId={senderId} msg={msg} chatOptions={chatOptions} index={index} optionMenu={optionMenu} showOptions={showOptions} vrPosition={vrPosition} hrPosition={hrPosition} openDeleteModel={openDeleteModel} />
                                                     </div>
                                                     : msg.delete_me === 0 &&
                                                     //green

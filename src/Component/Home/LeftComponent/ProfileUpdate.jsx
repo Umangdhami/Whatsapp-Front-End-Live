@@ -8,7 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import Moveable from 'react-moveable';
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
-import {getProfile, updateProfile} from '../../../common/Apis/ApiService'
+import {getProfile, removeProfilePic, updateProfile} from '../../../common/Apis/ApiService'
 import {useAlert} from '../../../common/Toasts/AlertProvider'
 import {useSuccess} from '../../../common/Toasts/SuccessProvider'
 import { useLoader } from '../../Loader/useLoader';
@@ -379,20 +379,20 @@ const ProfileUpdate = ({ setScale, scale }) => {
     const removeProfilePhoto = async (id) => {
         try {
 
-            const headers = { 'Content-Type': 'multipart/form-data' };
             startLoading()
-            const response = await removeProfilePhoto(id, true, headers)
+            openRemovePhotoModel()
+            const headers = { 'Content-Type': 'multipart/form-data' };
+            const response = await removeProfilePic(id, true, headers)
             // const res = await axios.delete(`${ENDPOINTS.removeProfilePhoto}/${id}`, { headers })
 
-            if (response?.status) {
-                setProfilePic(res.data?.data?.profile_pic)
-                openRemovePhotoModel()
+            if (response.status) {
+                setProfilePic(response.data?.data?.profile_pic)
             } else {
                alert(response.error)
             }
 
         } catch (error) {
-            window.alert(error.message)
+            alert(error.message)
         }finally{
             stopLoading()
         }
@@ -429,16 +429,16 @@ const ProfileUpdate = ({ setScale, scale }) => {
 
     const updateProfileById = async (id, body) => {
         try {
-            console.log(body, 'bodyyyyyyyyyyyyy')
+            console.log('object nfmb', id)
             let data = {}
             const headers = { 'Content-Type': 'multipart/form-data' };
-            const formData = new FormData();
-            formdata?.append("profile_pic", file);
+            const formdata = new FormData();
+            formdata.append("profile_pic", file);
 
             for (const key in body) {
                 if (body.hasOwnProperty(key)) {
                     data[key] = body[key]
-                    formdata?.append(`${key}`, body[key]);
+                    formdata.append(`${key}`, body[key]);
                 }
             }
             console.log(data, 'data')
@@ -486,6 +486,10 @@ const ProfileUpdate = ({ setScale, scale }) => {
     }
 
     const handleTakePhoto = async (id) => {
+
+        console.log(id, profile, 'take photo')
+
+        // return id
         if (videoRef.current && canvasRef.current) {
             const canvas = canvasRef.current;
             const context = canvas.getContext('2d');
@@ -652,7 +656,7 @@ const ProfileUpdate = ({ setScale, scale }) => {
                             <div className="w-full bg-[#F0F2F5] py-[20px]">
                                 <div className="w-full flex justify-end">
                                     <div className="flex justify-center w-full gap-4">
-                                        <button onClick={() => handleTakePhoto(profile?.profile?._id)} className="w-[60px] h-[60px] bg-[#00a884] rounded-full mt-[-20px] translate-y-[-50%] flex justify-center items-center text-white">
+                                        <button onClick={() => handleTakePhoto(profile._id)} className="w-[60px] h-[60px] bg-[#00a884] rounded-full mt-[-20px] translate-y-[-50%] flex justify-center items-center text-white">
                                             <span>
                                                 <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" class="" version="1.1" x="0px" y="0px" enable-background="new 0 0 24 24"><title>camera</title><path fill="currentColor" d="M21.317,4.381H10.971L9.078,2.45C8.832,2.199,8.342,1.993,7.989,1.993H4.905 c-0.352,0-0.837,0.211-1.078,0.468L1.201,5.272C0.96,5.529,0.763,6.028,0.763,6.38v1.878c0,0.003-0.002,0.007-0.002,0.01v11.189 c0,1.061,0.86,1.921,1.921,1.921h18.634c1.061,0,1.921-0.86,1.921-1.921V6.302C23.238,5.241,22.378,4.381,21.317,4.381z  M12.076,18.51c-3.08,0-5.577-2.497-5.577-5.577s2.497-5.577,5.577-5.577s5.577,2.497,5.577,5.577 C17.654,16.013,15.157,18.51,12.076,18.51z M12.076,9.004c-2.17,0-3.929,1.759-3.929,3.929s1.759,3.929,3.929,3.929 s3.929-1.759,3.929-3.929C16.004,10.763,14.245,9.004,12.076,9.004z"></path></svg>
                                             </span>
@@ -932,7 +936,7 @@ const ProfileUpdate = ({ setScale, scale }) => {
                                                     </button>
                                                     <button type="button" style={{ transition: '.2s' }} className={slideRight ? 'translate-x-[50%]' : ''} onClick={() => { setTimeout(() => {
                                                         setEditName(false)
-                                                    }, 300), setUpdateName(proUsername), setSlideRight(true), updateProfileById(profile.profile?._id, {username : updateName}); }}>
+                                                    }, 300), setUpdateName(proUsername), setSlideRight(true), updateProfileById(profile.profile._id, {username : updateName}); }}>
                                                         <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" class="" version="1.1" x="0px" y="0px" enable-background="new 0 0 24 24"><title>checkmark</title><path fill="#8696a0" d="M9,17.2l-4-4l-1.4,1.3L9,19.9L20.4,8.5L19,7.1L9,17.2z"></path></svg>
                                                     </button>
                                                 </div>

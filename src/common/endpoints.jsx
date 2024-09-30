@@ -1,8 +1,8 @@
 
 const URL = {
     // API 
-    baseUrl : 'https://whatsapp-back-end-live.onrender.com/'
-    // baseUrl : 'http://localhost:5011/'
+    // baseUrl : 'https://whatsapp-back-end-live.onrender.com/'
+    baseUrl : 'http://localhost:5011/'
 }
 
 const ENDPOINTS = {
