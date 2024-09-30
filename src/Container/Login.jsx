@@ -31,8 +31,8 @@ const Login = () => {
             const response = await loginUser(data);
 
             if (response?.status) {
-                localStorage.setItem('token', JSON.stringify(response.data.data.token))
-                localStorage.setItem('user_id', JSON.stringify(response.data.data._doc?._id))
+                localStorage.setItem('token', JSON.stringify(response.data?.data?.token))
+                localStorage.setItem('user_id', JSON.stringify(response.data?.data?._doc?._id))
                 success('Login SuccessFully...')
                 navigate('/')
             } else {

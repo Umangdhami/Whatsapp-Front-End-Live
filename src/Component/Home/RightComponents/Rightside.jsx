@@ -123,7 +123,7 @@ const Rightside = ({ data }) => {
             let sender_id = JSON.parse(localStorage.getItem('senderId'))
             let reciver_id = JSON.parse(localStorage.getItem('reciverId'))
 
-            if (reciver_id == data.sender_id && data.reciver_id == sender_id) {
+            if (reciver_id == data?.sender_id && data?.reciver_id == sender_id) {
                 setChats((prevChats) => {
                     const chatExists = prevChats.some(chat => chat?._id === data?._id);
                     if (!chatExists) {
@@ -140,8 +140,8 @@ const Rightside = ({ data }) => {
 
         socket.on('chatMessageDeleted', (id, data) => {
 
-            if (data && data.reciver_id) {
-                if (senderId == data.reciver_id) {
+            if (data && data?.reciver_id) {
+                if (senderId == data?.reciver_id) {
                     setChats(chats.map(item => item?._id === data?._id ? data : item))
                 }
             }
@@ -198,8 +198,8 @@ const Rightside = ({ data }) => {
             // const res = await axios.post(`${ENDPOINTS.updateChat}/${msgId}`, { msg: editMsg }, { headers })
     
             if (response?.status) {
-                setChats(chats.map((item) => item?._id === response.data.data?._id ? response.data.data : item))
-                socket.emit('editChat', response.data.data)
+                setChats(chats.map((item) => item?._id === response.data?.data?._id ? response.data?.data : item))
+                socket.emit('editChat', response.data?.data)
             }else{
                 alert(response.error)
             }
@@ -275,8 +275,8 @@ const Rightside = ({ data }) => {
             const response = await deleteChatUserside(msgId, true)
             // const res = await axios.get(`${ENDPOINTS.deleteChatUserside}/${msgId}`)
             if (response.status === true) {
-                setChats(chats.filter((item) => item?._id !== response.data.data?._id));
-                socket.emit('delete-chat', response.data.data?._id)
+                setChats(chats.filter((item) => item?._id !== response.data?.data?._id));
+                socket.emit('delete-chat', response.data?.data?._id)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
@@ -299,8 +299,8 @@ const Rightside = ({ data }) => {
             // const res = await axios.get(`${ENDPOINTS.deleteChatBothside}/${msgId}`, { headers })
     
             if (response.status === true) {
-                setChats(chats.map((item) => item?._id === response.data.data?._id ? response.data.data : item))
-                socket.emit('delete-chat', response.data.data?._id, response.data.data)
+                setChats(chats.map((item) => item?._id === response.data?.data?._id ? response.data?.data : item))
+                socket.emit('delete-chat', response.data?.data?._id, response.data?.data)
                 setOpenModal(!openModal)
                 setChatOptions(false)
             }else{
@@ -332,7 +332,7 @@ const Rightside = ({ data }) => {
                 const response = await getUserChat(body, true)
     
                 if(response.status){
-                    setChats(response.data.data)
+                    setChats(response.data?.data)
                 }else{
                     alert(response.error)
                 }
@@ -355,7 +355,7 @@ const Rightside = ({ data }) => {
 
         if (chatUser.length !== 0) {
             getChat()
-            setIsOnline(data.is_online)
+            setIsOnline(data?.is_online)
         }
     }, [data])
 
@@ -364,9 +364,9 @@ const Rightside = ({ data }) => {
         localStorage.removeItem('reciverId')
         if (chatUser.length !== 0) {
             setReciverId(chatUser[0]?._id);
-            localStorage.setItem('senderId', JSON.stringify(chatUser[0].sender_id))
+            localStorage.setItem('senderId', JSON.stringify(chatUser[0]?.sender_id))
             localStorage.setItem('reciverId', JSON.stringify(chatUser[0]?._id))
-            setSenderId(chatUser[0].sender_id);
+            setSenderId(chatUser[0]?.sender_id);
             setUsername(chatUser[0].username)
             getChat()
         }
@@ -381,7 +381,7 @@ const Rightside = ({ data }) => {
             let sender_id = JSON.parse(localStorage.getItem('senderId'))
             let reciver_id = JSON.parse(localStorage.getItem('reciverId'))
 
-            if (reciver_id == data.sender_id && data.reciver_id == sender_id) {
+            if (reciver_id == data?.sender_id && data?.reciver_id == sender_id) {
                 setChats((prevChats) => {
                     const chatExists = prevChats.some(chat => chat?._id === data?._id);
                     if (!chatExists) {
@@ -562,14 +562,14 @@ const Rightside = ({ data }) => {
                                             <div className="flex">
                                                 <div className="pro-pic">
                                                     <div className="w-[40px] h-[40px] rounded-full overflow-auto">
-                                                        <img src={data.profile.profile_pic} className='w-full h-full object-cover' alt="" />
+                                                        <img src={data?.profile.profile_pic} className='w-full h-full object-cover' alt="" />
                                                     </div>
                                                 </div>
 
                                                 <div className="flex w-[100%] flex-col ms-4">
                                                     <div className="flex flex-col w-[100%] justify-between leading-tight">
                                                         <div className="name">
-                                                            <span className='text-[#111b21] text-[16px]'>{data.profile.username}</span>
+                                                            <span className='text-[#111b21] text-[16px]'>{data?.profile.username}</span>
                                                         </div>
                                                         <div className="last-msg">
                                                             <span className='text-[13px] text-[#667781]'>{isOnline == 1 ? 'Online' : 'Offline'}</span>
@@ -617,7 +617,7 @@ const Rightside = ({ data }) => {
                                             chats.map((msg, index) => (
 
 
-                                                msg.sender_id == reciverId ?
+                                                msg?.sender_id == reciverId ?
                                                     //white
                                                     <div key={index} ref={el => messageRefs.current[msg?._id] = el} data-id={msg?._id} >
                                                         <Recive msg={msg} chatOptions={chatOptions} index={index} optionMenu={optionMenu} showOptions={showOptions} vrPosition={vrPosition} hrPosition={hrPosition} openDeleteModel={openDeleteModel} />

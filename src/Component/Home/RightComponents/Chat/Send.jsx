@@ -59,8 +59,8 @@ const Send = ({ isOnline, chatId, msgId, msg, chatOptions, index, optionMenu, sh
     });
 
     socket.on('chatReadSuccess', (data) => {
-        if (data.length != 0) {
-            data.filter((chat) => {
+        if (data?.length != 0) {
+            data?.filter((chat) => {
                 if (chat?._id == msg?._id) {
                     setIsRead(1)
                 }

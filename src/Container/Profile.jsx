@@ -22,7 +22,7 @@ const Profile = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        data.profile_pic = file
+        data?.profile_pic = file
 
         console.log('hello')
 
@@ -48,15 +48,15 @@ const Profile = () => {
                 success("Register Successfully...")
                 navigate('/login')
             }else {
-                alert(response.data.message);
+                alert(response.data?.message);
                 navigate('/login')
             }
 
-            // if (response.data.status && response.data.statusCode == 200) {
+            // if (response.data?.status && response.data?.statusCode == 200) {
                 
             // } else {
             //     navigate('/login')
-            //     throw new Error(response.data.message);
+            //     throw new Error(response.data?.message);
             // }
         } catch (err) {
             window.alert(err)

@@ -24,7 +24,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
 
         if (reciver_id == sendrId) {
             let notification = notificationChat.filter((chat) => {
-                if (chat.reciver_id !== reciver_id && chat.sender_id !== sendrId) {
+                if (chat?.reciver_id !== reciver_id && chat?.sender_id !== sendrId) {
                     return chat
                 }
             })
@@ -38,7 +38,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
         let reciverId = JSON.parse(localStorage.getItem('reciverId'))
         let notification = notificationChat.filter((chat) => {
             if (chat?.is_read == 0) {
-                if (chat.reciver_id == reciver_id && chat.sender_id == sendrId && reciverId !== sendrId) {
+                if (chat?.reciver_id == reciver_id && chat?.sender_id == sendrId && reciverId !== sendrId) {
                     return chat
                 }
             }
@@ -73,7 +73,7 @@ const LeftUserPanel = ({ sendrId, users, u, index, openChatPanel, isActive }) =>
             // })
             console.log('grt noti', response)
             if (response?.status) {
-                setNotificationChat(response.data.data)
+                setNotificationChat(response.data?.data)
             } else {
                 alert(response.error)
             }

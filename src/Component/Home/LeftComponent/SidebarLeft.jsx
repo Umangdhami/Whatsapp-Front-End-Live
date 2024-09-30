@@ -32,9 +32,9 @@ const SidebarLeft = ({ onButtonClick }) => {
             // const res = await axios.get(`${ENDPOINTS.getSingleUser}/${id}`, { headers })
     
             if(response.status){
-                dispatch(User(response.data.data))
-                setIsActive(response.data.data)
-                onButtonClick(response.data.data)
+                dispatch(User(response.data?.data))
+                setIsActive(response.data?.data)
+                onButtonClick(response.data?.data)
             }else{
                 alert(response.error)
             }
@@ -64,8 +64,8 @@ const SidebarLeft = ({ onButtonClick }) => {
                 const res = await getChatUsers(true)
 
                 if (res.status) {
-                    setUsers(res.data.data)
-                    dispatch(chatUsers(res.data.data))
+                    setUsers(res.data?.data)
+                    dispatch(chatUsers(res.data?.data))
                 } else {
                     alert(res.error)
                 }
@@ -86,7 +86,7 @@ const SidebarLeft = ({ onButtonClick }) => {
                 console.log(response, 'pp res')
                 // const res = await axios.get(ENDPOINTS.getLoginUser, { headers })
                 if (response?.status) {
-                    setLoginUser(response.data.data[0])
+                    setLoginUser(response.data?.data[0])
                 } else {
                     alert(response.error)
                 }
@@ -111,8 +111,8 @@ const SidebarLeft = ({ onButtonClick }) => {
         });
 
         socket.on('chatReadSuccess', (data) => {
-            if (data.length != 0) {
-                data.forEach((chat) => {
+            if (data?.length != 0) {
+                data?.forEach((chat) => {
                     chat.is_read = 1;
                 });
                 socket.emit('chatReciveNotification', data)

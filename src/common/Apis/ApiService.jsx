@@ -6,9 +6,9 @@ import { RES_MESSAGE } from '../statusMessage';
 const validRespones = async (res) => {
     try {
         console.log('valid response ', res)
-        if (!(res.data.status && res.data.statusCode == 200)) {
-            console.log('valid errrrr', res.data.message)
-            return { err: res.data.message }
+        if (!(res.data?.status && res.data?.statusCode == 200)) {
+            console.log('valid errrrr', res.data?.message)
+            return { err: res.data?.message }
         }
 
         return res
@@ -39,8 +39,8 @@ export const registerUser = async (userData, customHeaders = {}) => {
             return { status: false, error: res.err }
         }
 
-        localStorage.setItem('user', JSON.stringify(response.data.data?._id))
-        localStorage.setItem('pr_id', JSON.stringify(response.data.profile?._id))
+        localStorage.setItem('user', JSON.stringify(response.data?.data?._id))
+        localStorage.setItem('pr_id', JSON.stringify(response.data?.profile?._id))
 
         return { status: true }
 
@@ -89,8 +89,8 @@ export const updateProfile = async (id, userData, token=false, customHeaders) =>
             return { status: false, error: res.err }
         }
 
-        // localStorage.setItem('token', JSON.stringify(response.data.data.token))
-        // localStorage.setItem('user_id', JSON.stringify(response.data.data._doc?._id))
+        // localStorage.setItem('token', JSON.stringify(response.data?.data?.token))
+        // localStorage.setItem('user_id', JSON.stringify(response.data?.data?._doc?._id))
 
         return { status: true, data : res.data }
 

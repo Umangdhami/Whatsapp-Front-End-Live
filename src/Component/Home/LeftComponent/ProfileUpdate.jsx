@@ -307,10 +307,10 @@ const ProfileUpdate = ({ setScale, scale }) => {
                 // const res = await axios.get(ENDPOINTS.getProfile, { headers })
 
                 if (response?.status) {
-                    setProfile(response.data.data[0])
-                    setProfilePic(response.data.data[0]?.profile?.profile_pic)
-                    setProUsername(response.data.data[0]?.profile?.username)
-                    setUpdateName(response.data.data[0]?.profile?.username)
+                    setProfile(response.data?.data[0])
+                    setProfilePic(response.data?.data[0]?.profile?.profile_pic)
+                    setProUsername(response.data?.data[0]?.profile?.username)
+                    setUpdateName(response.data?.data[0]?.profile?.username)
                 } else {
                     localStorage.clear()
                     alert(response.error)
@@ -433,12 +433,12 @@ const ProfileUpdate = ({ setScale, scale }) => {
             let data = {}
             const headers = { 'Content-Type': 'multipart/form-data' };
             const formData = new FormData();
-            formData.append("profile_pic", file);
+            formdata?.append("profile_pic", file);
 
             for (const key in body) {
                 if (body.hasOwnProperty(key)) {
                     data[key] = body[key]
-                    formData.append(`${key}`, body[key]);
+                    formdata?.append(`${key}`, body[key]);
                 }
             }
             console.log(data, 'data')
@@ -447,7 +447,7 @@ const ProfileUpdate = ({ setScale, scale }) => {
             const response = await updateProfile(id, data, true, headers)
 
             if(response.status){
-                setProfilePic(response.data.data.profile_pic)
+                setProfilePic(response.data?.data?.profile_pic)
                 setProUsername(response.data?.data?.username)
                 setFile(null)
                 closePopup()
@@ -456,13 +456,13 @@ const ProfileUpdate = ({ setScale, scale }) => {
                 alert(response.error)
             }
 
-            // if (res.data.status && res.data.statusCode == 200) {
+            // if (res.data?.status && res.data?.statusCode == 200) {
             //     setProfilePic(res.data?.data?.profile_pic)
             //     setProUsername(res.data?.data?.username)
             //     setFile(null)
             //     closePopup()
             // } else {
-            //     throw new Error(res.data.message);
+            //     throw new Error(res.data?.message);
             // }
 
         } catch (error) {
@@ -504,14 +504,14 @@ const ProfileUpdate = ({ setScale, scale }) => {
                 //     const token = localStorage.getItem('token')
                 //     const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' };
                 //     const formData = new FormData();
-                //     formData.append("profile_pic", file);
+                //     formdata?.append("profile_pic", file);
                 //     const res = await axios.post(`${ENDPOINTS.updateProfilePhoto}/${id}`, formData, { headers })
 
-                //     if (res.data.status && res.data.statusCode == 200) {
+                //     if (res.data?.status && res.data?.statusCode == 200) {
                 //         setProfilePic(res.data?.data?.profile_pic)
                 //         closeTakePhoto()
                 //     } else {
-                //         throw new Error(res.data.message);
+                //         throw new Error(res.data?.message);
                 //     }
 
                 // } catch (error) {

@@ -23,7 +23,7 @@ const Home = () => {
     //         const headers = { 'Authorization': `Bearer ${token}` };
     //         const res = await axios.get(ENDPOINTS.getLoginUser, { headers })
 
-    //         if(!res.data.status){
+    //         if(!res.data?.status){
     //             console.log('hello')
     //             localStorage.clear()
     //             navigate('/')

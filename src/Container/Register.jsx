@@ -21,7 +21,7 @@ const Register = () => {
     const onSubmit = async (data) => {
 
         try {
-            if (data.password === data.conf_pass) {
+            if (data?.password === data?.conf_pass) {
 
                 try {
                     startLoading()
